@@ -6,3 +6,5 @@ Returns serial number with IP-adress on the local network for found x-series Keb
 
 #Garo - chargepointfinder
 Runs curl on local network IP:s and finds the chargepoint ID for the charger on the state page, returns IP-adress and chargepoint ID.
+
+I've also added some js files for use with browser and BLMS.
