@@ -1,8 +1,12 @@
-chargepointList = window.prompt("Please enter chargers to be restarted separated by comma").split(",");
+chargepointList = window.prompt("Please enter chargers to be restarted separated by comma or new line");
+if (chargepointList.includes(","))
+    chargepointList = chargepointList.split(',')
+if (chargepointList.includes("\n"))
+    chargepointList = chargepointList.split('\n')
 
-let total = chargepointList.length ;
+let total = chargepointList.length;
 
-const promiseArray = chargepointList.map(async (chargePointId)=>{
+const promiseArray = chargepointList.map(async(chargePointId)=>{
     return fetch("https://www.blms.nu/api/remote/reset/", {
         headers: {
             accept: "application/json",
@@ -37,11 +41,10 @@ const promiseArray = chargepointList.map(async (chargePointId)=>{
 );
 
 Promise.all(promiseArray).then((values)=>{
-  const successes = values.filter(value => value.success === true)
-  const fails = values.filter(value => value.success === false)
-  console.log(`Successful reboots:${successes.length}, ${(successes.length/total*100).toFixed(2)}%`)
-  console.table(successes);
-  console.log(`Failed reboots:${fails.length}, ${(fails.length/total*100).toFixed(2)}%`);
-  console.table(fails);
-}
-);
+    const successes = values.filter(value=>value.success === true)
+    const fails = values.filter(value=>value.success === false)
+    console.log(`Successful reboots:${successes.length}, ${(successes.length / total * 100).toFixed(2)}%`)
+    console.table(successes);
+    console.log(`Failed reboots:${fails.length}, ${(fails.length / total * 100).toFixed(2)}%`);
+    console.table(fails);
+});
